@@ -9,22 +9,39 @@ const styles = StyleSheet.create({
 		backgroundColor: constants.Colors.white,
 	},
 	row: {
+		paddingHorizontal: 10,
+		width: '100%',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 	msgInputText: {
-		width: 280,
-		height: 50,
+		width: '85%',
+		height: 40,
 		paddingHorizontal: 15,
 		paddingVertical: 5,
 		alignItems: 'flex-start',
 		borderColor: constants.Colors.black,
 		borderWidth: 0.5,
-		borderRadius: 25,
+		borderRadius: 20,
 		fontSize: 18,
-		marginRight: 10,
 	},
+	recordButton: {
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		backgroundColor: constants.Colors.purple,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	recordingButton: {
+		width: 60,
+		height: 60,
+		borderRadius: 30,
+		backgroundColor: constants.Colors.purple,
+		justifyContent: 'center',
+		alignItems: 'center',
+	}
 })
 
 export default styles

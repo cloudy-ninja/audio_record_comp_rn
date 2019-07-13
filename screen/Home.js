@@ -7,6 +7,7 @@ import {
   style,
   Container,
   MsgInputText,
+  RecordButton,
 } from '../components/Home'
 
 export class HomeScreen extends React.Component {
@@ -19,7 +20,10 @@ export class HomeScreen extends React.Component {
       <Container>
         <View style={style.row}>
           <MsgInputText
-            placeholder={'audioRecord'}
+            isRecording={false}
+          />
+          <RecordButton
+            isRecording={false}
           />
         </View>
       </Container>
