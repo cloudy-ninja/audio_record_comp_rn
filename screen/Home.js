@@ -10,6 +10,7 @@ import {
   RecordButton,
   RecordingView,
   LockButton,
+  StopButton,
 } from '../components/Home'
 
 export class HomeScreen extends React.Component {
@@ -18,16 +19,25 @@ export class HomeScreen extends React.Component {
 
     this.state = {
       isRecording: false,
+      isStop: false,
     }
   }
 
   render() {
-    const { isRecording } = this.state
+    const {
+      isRecording,
+      isStop,
+    } = this.state
 
     return (
       <Container>
         {
-          isRecording
+          isStop
+          ? <StopButton />
+          : null
+        }
+        {
+          isRecording && !isStop
           ? <LockButton />
           : null
         }

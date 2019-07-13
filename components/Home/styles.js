@@ -56,7 +56,27 @@ const styles = StyleSheet.create({
 		backgroundColor: constants.Colors.gray,
 		borderBottomLeftRadius: 15,
 		borderBottomRightRadius: 15,
-		marginBottom: 20,
+		marginBottom: 10,
+	},
+	stopButton: {
+		width: 60,
+		height: 60,
+		backgroundColor: constants.Colors.red,
+		marginBottom: 10,
+	},
+	stopOuterRectangle: {
+		width: '100%',
+		height: '100%',
+		borderTopLeftRadius: 5,
+		borderTopRightRadius: 5,
+		backgroundColor: constants.Colors.gray,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	stopInnerRectangle: {
+		width: 20,
+		height: 20,
+		backgroundColor: constants.Colors.purple,
 	},
 })
 

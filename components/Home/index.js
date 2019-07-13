@@ -4,6 +4,7 @@ import MsgInputText from './MsgInputText'
 import RecordButton from './RecordButton'
 import RecordingView from './RecordingView'
 import LockButton from './LockButton'
+import StopButton from './StopButton'
 
 export {
   style,
@@ -12,4 +13,5 @@ export {
   RecordButton,
   RecordingView,
   LockButton,
+  StopButton,
 }
