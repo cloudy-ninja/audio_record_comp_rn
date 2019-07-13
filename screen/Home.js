@@ -4,7 +4,9 @@ import {
   Text
 } from 'react-native'
 import {
+  style,
   Container,
+  MsgInputText,
 } from '../components/Home'
 
 export class HomeScreen extends React.Component {
@@ -15,7 +17,11 @@ export class HomeScreen extends React.Component {
   render() {
     return (
       <Container>
-        <Text>Welcome to React Native!</Text>
+        <View style={style.row}>
+          <MsgInputText
+            placeholder={'audioRecord'}
+          />
+        </View>
       </Container>
     );
   }

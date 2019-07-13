@@ -1,7 +1,9 @@
-import styles from './styles'
+import style from './styles'
 import Container from './Container'
+import MsgInputText from './MsgInputText'
 
 export {
-  styles,
+  style,
   Container,
+  MsgInputText,
 }
