@@ -41,7 +41,12 @@ const styles = StyleSheet.create({
 		backgroundColor: constants.Colors.purple,
 		justifyContent: 'center',
 		alignItems: 'center',
-	}
+	},
+	recordingView: {
+		height: 40,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 })
 
 export default styles

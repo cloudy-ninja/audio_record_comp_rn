@@ -8,22 +8,34 @@ import {
   Container,
   MsgInputText,
   RecordButton,
+  RecordingView,
 } from '../components/Home'
 
 export class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isRecording: false,
+    }
   }
 
   render() {
+    const { isRecording } = this.state
+
     return (
       <Container>
         <View style={style.row}>
+          {
+            isRecording
+            ? <RecordingView />
+            : null
+          }
           <MsgInputText
-            isRecording={false}
+            isRecording={isRecording}
           />
           <RecordButton
-            isRecording={false}
+            isRecording={isRecording}
           />
         </View>
       </Container>
