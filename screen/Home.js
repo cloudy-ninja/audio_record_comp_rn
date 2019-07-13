@@ -23,8 +23,14 @@ export class HomeScreen extends React.Component {
     this.state = {
       isRecording: false,
       isStop: false,
-      isDone: true,
+      isDone: false,
     }
+  }
+
+  setIsRecording = () => {
+    this.setState({
+      isRecording: true,
+    })
   }
 
   render() {
@@ -70,6 +76,7 @@ export class HomeScreen extends React.Component {
             !isDone
             ? <RecordButton
                 isRecording={isRecording}
+                onLongPress={this.setIsRecording}
               />
             : <SendButton />
           }

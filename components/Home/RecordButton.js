@@ -8,11 +8,13 @@ import style from './styles'
 
 const RecordButton =({
   onPress,
+  onLongPress,
   isRecording,
 } = this.props) =>
   <TouchableOpacity
     style={!isRecording ? style.recordButton : style.recordingButton}
     onPress={onPress}
+    onLongPress={onLongPress}
   >
     <Icon name="microphone" size={!isRecording ? 20 : 30} />
   </TouchableOpacity>
