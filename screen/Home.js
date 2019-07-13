@@ -9,6 +9,7 @@ import {
   MsgInputText,
   RecordButton,
   RecordingView,
+  LockButton,
 } from '../components/Home'
 
 export class HomeScreen extends React.Component {
@@ -25,6 +26,11 @@ export class HomeScreen extends React.Component {
 
     return (
       <Container>
+        {
+          isRecording
+          ? <LockButton />
+          : null
+        }
         <View style={style.row}>
           {
             isRecording

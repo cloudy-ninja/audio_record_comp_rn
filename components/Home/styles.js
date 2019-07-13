@@ -47,6 +47,17 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	lockButton: {
+		width: 60,
+		height: 180,
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		backgroundColor: constants.Colors.gray,
+		borderBottomLeftRadius: 15,
+		borderBottomRightRadius: 15,
+		marginBottom: 20,
+	},
 })
 
 export default styles
