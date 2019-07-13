@@ -11,6 +11,9 @@ import {
   RecordingView,
   LockButton,
   StopButton,
+  RemoveButton,
+  PlayButton,
+  SendButton
 } from '../components/Home'
 
 export class HomeScreen extends React.Component {
@@ -20,6 +23,7 @@ export class HomeScreen extends React.Component {
     this.state = {
       isRecording: false,
       isStop: false,
+      isDone: true,
     }
   }
 
@@ -27,6 +31,7 @@ export class HomeScreen extends React.Component {
     const {
       isRecording,
       isStop,
+      isDone,
     } = this.state
 
     return (
@@ -47,12 +52,27 @@ export class HomeScreen extends React.Component {
             ? <RecordingView />
             : null
           }
+          {
+            isDone
+            ? <RemoveButton />
+            : null
+          }
+          {
+            isDone
+            ? <PlayButton />
+            : null
+          }
           <MsgInputText
             isRecording={isRecording}
+            isDone={isDone}
           />
-          <RecordButton
-            isRecording={isRecording}
-          />
+          {
+            !isDone
+            ? <RecordButton
+                isRecording={isRecording}
+              />
+            : <SendButton />
+          }
         </View>
       </Container>
     );

@@ -78,6 +78,14 @@ const styles = StyleSheet.create({
 		height: 20,
 		backgroundColor: constants.Colors.purple,
 	},
+	playButton: {
+		width: 36,
+		height: 36,
+		borderRadius: 18,
+		backgroundColor: constants.Colors.gray,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 })
 
 export default styles
