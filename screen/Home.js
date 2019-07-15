@@ -3,7 +3,10 @@ import {
   View,
   Text,
   Alert,
+  Platform
 } from 'react-native'
+import Sound from 'react-native-sound';
+import {AudioRecorder, AudioUtils} from 'react-native-audio';
 import {
   style,
   Container,
@@ -25,29 +28,117 @@ export class HomeScreen extends React.Component {
       isRecording: false,
       isLocked: false,
       isStop: false,
+      finished: false,
+      audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
+      hasPermission: undefined,
+      currentTime: 0.0,
     }
   }
 
-  startRecording = () => {
-    this.setState({
-      isRecording: true,
-    })
+  prepareRecordingPath = (audioPath) => {
+    AudioRecorder.prepareRecordingAtPath(audioPath, {
+      SampleRate: 22050,
+      Channels: 1,
+      AudioQuality: "Low",
+      AudioEncoding: "aac",
+      AudioEncodingBitRate: 32000
+    });
   }
 
+  componentDidMount() {
+    AudioRecorder.requestAuthorization().then((isAuthorised) => {
+      this.setState({ hasPermission: isAuthorised });
 
-  stopRecording = () => {
+      if (!isAuthorised) return;
+
+      this.prepareRecordingPath(this.state.audioPath);
+
+      AudioRecorder.onProgress = (data) => {
+        this.setState({currentTime: Math.floor(data.currentTime)});
+      };
+
+      AudioRecorder.onFinished = (data) => {
+        if (Platform.OS === 'ios') {
+          this._finishRecording(data.status === "OK", data.audioFileURL, data.audioFileSize);
+        }
+      };
+    });
+  }
+
+  _finishRecording = (didSucceed, filePath, fileSize) => {
+    this.setState({ finished: didSucceed });
+  }
+
+  _stop = async () => {
+    if (!this.state.isRecording) {
+      console.warn('Can\'t stop, not recording!');
+      return
+    }
+
     this.setState({
-      isRecording: false,
-      isLocked: false,
       isStop: true,
+      isRecording: false
     })
 
-    if(this.state.isLocked) {
-      // continue to recording
+    try {
+      const filePath = await AudioRecorder.stopRecording();
 
-    } else {
-      // stop recording
+      if (Platform.OS === 'android') {
+        this._finishRecording(true, filePath);
+      }
+      return filePath;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
+  _play = async () => {
+    if (this.state.isRecording) {
+      await this._stop();
+    }
+
+    setTimeout(() => {
+      const sound = new Sound(this.state.audioPath, '', (error) => {
+        if (error) {
+          console.log('Failed to load the sound', error);
+        }
+      });
+
+      setTimeout(() => {
+        sound.play((success) => {
+          if (success) {
+            console.log('successfully finished playing');
+          } else {
+            console.log('playback failed due to audio decoding errors');
+          }
+        });
+      }, 100);
+    }, 100);
+  }
+
+  _record = async () => {
+    if (this.state.isRecording) {
+      console.warn('Already recording!');
+      return;
+    }
+
+    if (!this.state.hasPermission) {
+      console.warn('Can\'t record, no permission granted!');
+      return;
+    }
+
+    if(this.state.stoppedRecording){
+      this.prepareRecordingPath(this.state.audioPath);
+    }
+
+    this.setState({
+      isRecording: true,
+    });
+
+    try {
+      const filePath = await AudioRecorder.startRecording();
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -65,7 +156,25 @@ export class HomeScreen extends React.Component {
 
   onSend = () => {
     this.setState({
+      isRecording: false,
+      isLocked: false,
       isStop: false,
+      finished: false,
+      audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
+      hasPermission: undefined,
+      currentTime: 0.0,
+    })
+  }
+
+  onRemove = () => {
+    this.setState({
+      isRecording: false,
+      isLocked: false,
+      isStop: false,
+      finished: false,
+      audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
+      hasPermission: undefined,
+      currentTime: 0.0,
     })
   }
 
@@ -81,7 +190,7 @@ export class HomeScreen extends React.Component {
         {
           isRecording && isLocked
           ? <StopButton
-              onPress={this.stopRecording}
+              onPress={this._stop}
             />
           : null
         }
@@ -98,24 +207,29 @@ export class HomeScreen extends React.Component {
           }
           {
             isStop
-            ? <RemoveButton />
+            ? <RemoveButton
+                onPress={this.onRemove}
+              />
             : null
           }
           {
             isStop
-            ? <PlayButton />
+            ? <PlayButton
+                onPress={this._play}
+              />
             : null
           }
           <MsgInputText
             isRecording={isRecording}
             isStop={isStop}
+            placeholder={this.state.currentTime.toString()}
           />
           {
             !isStop
             ? <RecordButton
                 isRecording={isRecording}
-                startRecording={this.startRecording}
-                stopRecording={this.stopRecording}
+                startRecording={this._record}
+                stopRecording={this._stop}
                 scrollOverRecordButton={this.scrollOverRecordButton}
               />
             : <SendButton
