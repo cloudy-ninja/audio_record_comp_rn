@@ -31,7 +31,7 @@ export class HomeScreen extends React.Component {
       finished: false,
       audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
       hasPermission: undefined,
-      currentTime: 0.0,
+      currentTime: '00.00',
     }
   }
 
@@ -54,7 +54,11 @@ export class HomeScreen extends React.Component {
       this.prepareRecordingPath(this.state.audioPath);
 
       AudioRecorder.onProgress = (data) => {
-        this.setState({currentTime: Math.floor(data.currentTime)});
+        let timeString = this.convertToTime(Math.floor(data.currentTime))
+        if(this.state.isRecording && !this.state.isLocked) {
+          timeString += '   Slide to cancel'
+        }
+        this.setState({currentTime: timeString});
       };
 
       AudioRecorder.onFinished = (data) => {
@@ -69,7 +73,7 @@ export class HomeScreen extends React.Component {
     this.setState({ finished: didSucceed });
   }
 
-  _stop = async () => {
+  onStopRecording = async () => {
     if (!this.state.isRecording) {
       console.warn('Can\'t stop, not recording!');
       return
@@ -92,7 +96,7 @@ export class HomeScreen extends React.Component {
     }
   }
 
-  _play = async () => {
+  onPlayRecord = async () => {
     if (this.state.isRecording) {
       await this._stop();
     }
@@ -116,7 +120,7 @@ export class HomeScreen extends React.Component {
     }, 100);
   }
 
-  _record = async () => {
+  onStartRecording = async () => {
     if (this.state.isRecording) {
       console.warn('Already recording!');
       return;
@@ -148,9 +152,7 @@ export class HomeScreen extends React.Component {
         isLocked: true,
       })
     } else {
-      this.setState({
-        isRecording: false,
-      })
+      this.initState()
     }
   }
 
@@ -161,17 +163,30 @@ export class HomeScreen extends React.Component {
       isStop: false,
       finished: false,
       audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
-      hasPermission: undefined,
-      currentTime: 0.0,
+      currentTime: '00.00',
     })
   }
 
-  onSend = () => {
+  onSendRecord = () => {
     this.initState()
   }
 
-  onRemove = () => {
+  onRemoveRecord = () => {
     this.initState()
+  }
+
+  convertToTime = (second) => {
+      let minutes = Math.floor(second / 60)
+      let seconds = second - minutes * 60
+
+      if (minutes < 10) {
+        minutes = "0" + minutes
+      }
+      if (seconds < 10) {
+        seconds = "0" + seconds
+      }
+
+      return minutes + ':' + seconds;
   }
 
   render() {
@@ -186,7 +201,7 @@ export class HomeScreen extends React.Component {
         {
           isRecording && isLocked
           ? <StopButton
-              onPress={this._stop}
+              onPress={this.onStopRecording}
             />
           : null
         }
@@ -204,32 +219,32 @@ export class HomeScreen extends React.Component {
           {
             isStop
             ? <RemoveButton
-                onPress={this.onRemove}
+                onPress={this.onRemoveRecord}
               />
             : null
           }
           {
             isStop
             ? <PlayButton
-                onPress={this._play}
+                onPress={this.onPlayRecord}
               />
             : null
           }
           <MsgInputText
             isRecording={isRecording}
             isStop={isStop}
-            placeholder={this.state.currentTime.toString()}
+            placeholder={isRecording ? this.state.currentTime.toString() : ''}
           />
           {
             !isStop
             ? <RecordButton
                 isRecording={isRecording}
-                startRecording={this._record}
-                stopRecording={this._stop}
+                startRecording={this.onStartRecording}
+                stopRecording={this.onStopRecording}
                 scrollOverRecordButton={this.scrollOverRecordButton}
               />
             : <SendButton
-                onPress={this.onSend}
+                onPress={this.onSendRecord}
               />
           }
         </View>
