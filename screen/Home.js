@@ -154,7 +154,7 @@ export class HomeScreen extends React.Component {
     }
   }
 
-  onSend = () => {
+  initState = () => {
     this.setState({
       isRecording: false,
       isLocked: false,
@@ -166,16 +166,12 @@ export class HomeScreen extends React.Component {
     })
   }
 
+  onSend = () => {
+    this.initState()
+  }
+
   onRemove = () => {
-    this.setState({
-      isRecording: false,
-      isLocked: false,
-      isStop: false,
-      finished: false,
-      audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
-      hasPermission: undefined,
-      currentTime: 0.0,
-    })
+    this.initState()
   }
 
   render() {
