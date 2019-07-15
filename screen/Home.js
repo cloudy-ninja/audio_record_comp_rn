@@ -28,7 +28,20 @@ export class HomeScreen extends React.Component {
     }
   }
 
-  onRecordPressOut = () => {
+  startRecording = () => {
+    this.setState({
+      isRecording: true,
+    })
+  }
+
+
+  stopRecording = () => {
+    this.setState({
+      isRecording: false,
+      isLocked: false,
+      isStop: true,
+    })
+
     if(this.state.isLocked) {
       // continue to recording
 
@@ -38,10 +51,16 @@ export class HomeScreen extends React.Component {
     }
   }
 
-  onRecordLongPress = () => {
-    this.setState({
-      isRecording: true,
-    })
+  scrollOverRecordButton = (isMovedToY) => {
+    if(isMovedToY) {
+      this.setState({
+        isLocked: true,
+      })
+    } else {
+      this.setState({
+        isRecording: false,
+      })
+    }
   }
 
   onSend = () => {
@@ -61,7 +80,9 @@ export class HomeScreen extends React.Component {
       <Container>
         {
           isRecording && isLocked
-          ? <StopButton />
+          ? <StopButton
+              onPress={this.stopRecording}
+            />
           : null
         }
         {
@@ -93,8 +114,9 @@ export class HomeScreen extends React.Component {
             !isStop
             ? <RecordButton
                 isRecording={isRecording}
-                onLongPress={this.onRecordLongPress}
-                onPressOut={this.onRecordPressOut}
+                startRecording={this.startRecording}
+                stopRecording={this.stopRecording}
+                scrollOverRecordButton={this.scrollOverRecordButton}
               />
             : <SendButton
                 onPress={this.onSend}
