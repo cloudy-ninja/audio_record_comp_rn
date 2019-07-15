@@ -1,7 +1,8 @@
 import React from "react";
 import {
   View,
-  Text
+  Text,
+  Alert,
 } from 'react-native'
 import {
   style,
@@ -22,33 +23,49 @@ export class HomeScreen extends React.Component {
 
     this.state = {
       isRecording: false,
+      isLocked: false,
       isStop: false,
-      isDone: false,
     }
   }
 
-  setIsRecording = () => {
+  onRecordPressOut = () => {
+    if(this.state.isLocked) {
+      // continue to recording
+
+    } else {
+      // stop recording
+
+    }
+  }
+
+  onRecordLongPress = () => {
     this.setState({
       isRecording: true,
+    })
+  }
+
+  onSend = () => {
+    this.setState({
+      isStop: false,
     })
   }
 
   render() {
     const {
       isRecording,
+      isLocked,
       isStop,
-      isDone,
     } = this.state
 
     return (
       <Container>
         {
-          isStop
+          isRecording && isLocked
           ? <StopButton />
           : null
         }
         {
-          isRecording && !isStop
+          isRecording && !isLocked
           ? <LockButton />
           : null
         }
@@ -59,26 +76,29 @@ export class HomeScreen extends React.Component {
             : null
           }
           {
-            isDone
+            isStop
             ? <RemoveButton />
             : null
           }
           {
-            isDone
+            isStop
             ? <PlayButton />
             : null
           }
           <MsgInputText
             isRecording={isRecording}
-            isDone={isDone}
+            isStop={isStop}
           />
           {
-            !isDone
+            !isStop
             ? <RecordButton
                 isRecording={isRecording}
-                onLongPress={this.setIsRecording}
+                onLongPress={this.onRecordLongPress}
+                onPressOut={this.onRecordPressOut}
               />
-            : <SendButton />
+            : <SendButton
+                onPress={this.onSend}
+              />
           }
         </View>
       </Container>

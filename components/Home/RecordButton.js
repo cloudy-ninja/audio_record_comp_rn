@@ -10,11 +10,15 @@ const RecordButton =({
   onPress,
   onLongPress,
   isRecording,
+  onPressIn,
+  onPressOut,
 } = this.props) =>
   <TouchableOpacity
     style={!isRecording ? style.recordButton : style.recordingButton}
     onPress={onPress}
     onLongPress={onLongPress}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
   >
     <Icon name="microphone" size={!isRecording ? 20 : 30} />
   </TouchableOpacity>

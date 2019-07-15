@@ -11,13 +11,13 @@ const MsgInputText = ({
   value,
   onChangeText,
   isRecording,
-  isDone,
+  isStop,
 } = this.props) =>
   <TextInput
     autoCapitalize='none'
     style={
       !isRecording
-        ? !isDone
+        ? !isStop
           ? style.msgInputText
           : {...style.msgInputText, width: '65%'}
         : {...style.msgInputText, width: '70%'}
