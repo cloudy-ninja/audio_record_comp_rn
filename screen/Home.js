@@ -143,14 +143,18 @@ export class HomeScreen extends React.Component {
     }
   }
 
-  scrollOverRecordButton = (isMovedToY) => {
+  cancelRecording = async () => {
+    await this.onStopRecording()
+    this.initState()
+  }
+
+  scrollOverRecordButton = async (isMovedToY) => {
     if(isMovedToY) {
       this.setState({
         isLocked: true,
       })
     } else {
-      this.onStopRecording()
-      this.initState()
+      this.cancelRecording()
     }
   }
 
@@ -234,6 +238,7 @@ export class HomeScreen extends React.Component {
             placeholder={isRecording ? this.state.currentTime.toString() : ''}
             isLocked={isLocked}
             recordingTime={currentTime}
+            cancelRecording={this.cancelRecording}
           />
           {
             !isStop

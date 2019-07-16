@@ -16,6 +16,7 @@ const MsgInputText = ({
   isStop,
   isLocked,
   recordingTime,
+  cancelRecording
 } = this.props) =>
   <View
     style={
@@ -42,7 +43,9 @@ const MsgInputText = ({
             </View>
           : <View style={style.cancelContainer}>
               <Text style={style.cancelButtonText}>{recordingTime}</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={cancelRecording}
+              >
                 <Text style={style.cancelButtonText}>{'Cancel'}</Text>
               </TouchableOpacity>
             </View>
