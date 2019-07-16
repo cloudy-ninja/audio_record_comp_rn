@@ -73,7 +73,6 @@ export class HomeScreen extends React.Component {
 
   onStopRecording = async () => {
     if (!this.state.isRecording) {
-      console.warn('Can\'t stop, not recording!');
       return
     }
 
@@ -124,12 +123,10 @@ export class HomeScreen extends React.Component {
 
   onStartRecording = async () => {
     if (this.state.isRecording) {
-      console.warn('Already recording!');
       return;
     }
 
     if (!this.state.hasPermission) {
-      console.warn('Can\'t record, no permission granted!');
       return;
     }
 
