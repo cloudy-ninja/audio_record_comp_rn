@@ -54,10 +54,7 @@ export class HomeScreen extends React.Component {
       this.prepareRecordingPath(this.state.audioPath);
 
       AudioRecorder.onProgress = (data) => {
-        let timeString = this.convertToTime(Math.floor(data.currentTime))
-        if(this.state.isRecording && !this.state.isLocked) {
-          timeString += '   Slide to cancel'
-        }
+        const timeString = this.convertToTime(Math.floor(data.currentTime))
         this.setState({currentTime: timeString});
       };
 
@@ -152,6 +149,7 @@ export class HomeScreen extends React.Component {
         isLocked: true,
       })
     } else {
+      this.onStopRecording()
       this.initState()
     }
   }
@@ -176,17 +174,16 @@ export class HomeScreen extends React.Component {
   }
 
   convertToTime = (second) => {
-      let minutes = Math.floor(second / 60)
-      let seconds = second - minutes * 60
+    let minutes = Math.floor(second / 60)
+    let seconds = second - minutes * 60
 
-      if (minutes < 10) {
-        minutes = "0" + minutes
-      }
-      if (seconds < 10) {
-        seconds = "0" + seconds
-      }
-
-      return minutes + ':' + seconds;
+    if (minutes < 10) {
+      minutes = "0" + minutes
+    }
+    if (seconds < 10) {
+      seconds = "0" + seconds
+    }
+    return minutes + ':' + seconds;
   }
 
   render() {
@@ -194,6 +191,7 @@ export class HomeScreen extends React.Component {
       isRecording,
       isLocked,
       isStop,
+      currentTime,
     } = this.state
 
     return (
@@ -234,6 +232,8 @@ export class HomeScreen extends React.Component {
             isRecording={isRecording}
             isStop={isStop}
             placeholder={isRecording ? this.state.currentTime.toString() : ''}
+            isLocked={isLocked}
+            recordingTime={currentTime}
           />
           {
             !isStop

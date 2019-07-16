@@ -86,6 +86,16 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	cancelContainer: {
+		height: '100%',
+		width: '100%',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+	cancelButtonText: {
+		color: constants.Colors.purple
+	}
 })
 
 export default styles
