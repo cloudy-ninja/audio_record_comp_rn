@@ -4898,6 +4898,11 @@ react-native-audio@^4.3.0:
   resolved "https://registry.yarnpkg.com/react-native-audio/-/react-native-audio-4.3.0.tgz#fae22b81f6a4dda706fd4837d0c6a89c66cf2e7e"
   integrity sha512-QQYq28eSJy+y/Ukvry0AkbwMVELAj+LcEwCVRH+7sKLqlnoBBxGd4ilhgJHjwOiC70192LueGbjXJjPPEwW3iA==
 
+react-native-audiowaveform@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-audiowaveform/-/react-native-audiowaveform-2.0.3.tgz#43815225208e51311fa160683ab8f812edffbec2"
+  integrity sha512-TC5g52i4S+8n302Qn5dj0SqWux+2xzoxqwJxei0oNXy8gJcU+YjjbrL4YBO56NHucTNQjpQXFTbcWxEEeCIvAA==
+
 react-native-safe-area-view@^0.14.6:
   version "0.14.6"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.14.6.tgz#9a9d37d9f8f3887d60c4076eae7b5d2319539446"
