@@ -95,7 +95,13 @@ const styles = StyleSheet.create({
 	},
 	cancelButtonText: {
 		color: constants.Colors.purple
-	}
+	},
+	waveform: {
+		width: '100%',
+		height: '100%',
+		backgroundColor: "lightslategray",
+		paddingTop: 0,
+	},
 })
 
 export default styles

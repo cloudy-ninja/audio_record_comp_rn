@@ -32,6 +32,7 @@ export class HomeScreen extends React.Component {
       audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
       hasPermission: undefined,
       currentTime: '00.00',
+      isPlaying: false,
     }
   }
 
@@ -97,6 +98,10 @@ export class HomeScreen extends React.Component {
     if (this.state.isRecording) {
       await this._stop();
     }
+
+    this.setState({
+      isPlaying: true,
+    })
 
     setTimeout(() => {
       const sound = new Sound(this.state.audioPath, '', (error) => {
@@ -166,6 +171,7 @@ export class HomeScreen extends React.Component {
       finished: false,
       audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
       currentTime: '00.00',
+      isPlaying: false,
     })
   }
 
@@ -196,6 +202,7 @@ export class HomeScreen extends React.Component {
       isLocked,
       isStop,
       currentTime,
+      isPlaying,
     } = this.state
 
     return (
@@ -239,6 +246,7 @@ export class HomeScreen extends React.Component {
             isLocked={isLocked}
             recordingTime={currentTime}
             cancelRecording={this.cancelRecording}
+            isPlaying={isPlaying}
           />
           {
             !isStop
