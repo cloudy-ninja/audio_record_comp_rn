@@ -3,6 +3,7 @@ package com.audiorecordcomp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.otomogroove.OGReactNativeWaveform.OGWavePackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OGWavePackage(),
             new RNSoundPackage(),
             new ReactNativeAudioPackage()
       );
